@@ -32,6 +32,7 @@ module.exports = {
         'float': 'float 3s ease-in-out infinite',
         'gradient': 'gradient 3s ease infinite',
         'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'slide-in': 'slide-in 0.3s ease-out',
       },
       keyframes: {
         fadeIn: {
@@ -55,6 +56,10 @@ module.exports = {
             'background-size': '200% 200%',
             'background-position': 'right center',
           },
+        },
+        'slide-in': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' },
         },
       },
     },

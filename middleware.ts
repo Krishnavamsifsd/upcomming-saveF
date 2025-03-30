@@ -22,7 +22,31 @@ export async function middleware(request: NextRequest) {
 
   if (request.nextUrl.pathname.startsWith('/auth')) {
     if (user) {
-      return NextResponse.redirect(new URL('/home', request.url));
+      const userRole = user.user_metadata?.role;
+      
+      if (userRole === 'restaurant') {
+        // Check if restaurant exists
+        const { data: restaurantData } = await supabase
+          .from('restaurants')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+
+        if (!restaurantData) {
+          return NextResponse.redirect(new URL('/restaurant-setup', request.url));
+        }
+        return NextResponse.redirect(new URL('/restaurant/dashboard', request.url));
+      } 
+      
+      if (userRole === 'customer') {
+        return NextResponse.redirect(new URL('/home', request.url));
+      } else {
+        return NextResponse.redirect(new URL('/home', request.url));
+
+      }
+
+      // For unverified or unknown roles
+      // return NextResponse.redirect(new URL('/auth/verification-pending', request.url));
     }
     return res;
   }

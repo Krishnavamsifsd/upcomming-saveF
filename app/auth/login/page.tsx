@@ -28,12 +28,12 @@ export default function SignIn() {
 
       if (error) throw error;
 
+      // Force a router refresh - the middleware will handle the redirect
       router.refresh();
-      router.push('/home');
       
     } catch (error: any) {
+      console.error('Full error:', error);
       setError(error.message);
-      console.error('Error:', error.message);
     } finally {
       setIsLoading(false);
     }

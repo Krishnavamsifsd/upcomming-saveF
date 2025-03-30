@@ -4,6 +4,9 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { Cookies } from "react-cookie";
+
+const cookies = new Cookies();
 
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
@@ -44,13 +47,31 @@ export const signInAction = async (formData: FormData) => {
   const password = formData.get("password") as string;
   const supabase = await createClient();
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
+  console.log("Supabase Response:", { data, error }); // Debugging log
+
   if (error) {
+    console.error("Supabase Error:", error.message);
     return encodedRedirect("error", "/sign-in", error.message);
+  }
+
+  if (data.session) {
+    console.log("Session Data:", data.session); // Debugging log
+    cookies.set("access_token", data.session.access_token, {
+      path: "/",
+      httpOnly: false,
+    });
+    cookies.set("refresh_token", data.session.refresh_token, {
+      path: "/",
+      httpOnly: false,
+    });
+  } else {
+    console.error("No session returned from Supabase.");
+    return encodedRedirect("error", "/sign-in", "No session returned.");
   }
 
   return redirect("/protected");
