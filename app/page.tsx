@@ -62,27 +62,7 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Mobile Navigation - Bottom Tab Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t z-50 px-2 py-3">
-        <div className="flex justify-around items-center">
-          <Link href="/" className="flex flex-col items-center space-y-1">
-            <Utensils className="w-6 h-6 text-emerald-600" />
-            <span className="text-xs">Home</span>
-          </Link>
-          <Link href="/search" className="flex flex-col items-center space-y-1">
-            <MapPin className="w-6 h-6 text-gray-500" />
-            <span className="text-xs">Search</span>
-          </Link>
-          <Link href="/orders" className="flex flex-col items-center space-y-1">
-            <Clock className="w-6 h-6 text-gray-500" />
-            <span className="text-xs">Orders</span>
-          </Link>
-          <Link href="/profile" className="flex flex-col items-center space-y-1">
-            <div className="w-6 h-6 rounded-full bg-gray-200"></div>
-            <span className="text-xs">Profile</span>
-          </Link>
-        </div>
-      </nav>
+  
 
       {/* Hero Section */}
       <section className="pt-32 lg:pt-40 overflow-hidden">
@@ -106,7 +86,7 @@ export default function LandingPage() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up delay-300">
-                <Link href="/auth/signup"
+                <Link href="/auth/login"
                   className="group flex items-center justify-center px-8 py-4 bg-black text-white rounded-full hover:bg-black/90 transition-all transform hover:scale-105 hover:shadow-xl">
                   <span className="text-lg">Get Started</span>
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
