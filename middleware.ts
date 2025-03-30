@@ -5,29 +5,29 @@ import type { NextRequest } from 'next/server';
 export async function middleware(request: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req: request, res });
-  const { data: { session } } = await supabase.auth.getSession();
+
+  // ✅ Use getUser() instead of getSession() to avoid excessive token refreshes
+  const { data: { user } } = await supabase.auth.getUser();
 
   // Set the pathname header for the layout to use
   res.headers.set('x-pathname', request.nextUrl.pathname);
 
-  // Handle root path
+  // Redirect logic
   if (request.nextUrl.pathname === '/') {
-    if (session) {
+    if (user) {
       return NextResponse.redirect(new URL('/home', request.url));
     }
     return res;
   }
 
-  // Handle auth routes
   if (request.nextUrl.pathname.startsWith('/auth')) {
-    if (session) {
+    if (user) {
       return NextResponse.redirect(new URL('/home', request.url));
     }
     return res;
   }
 
-  // Handle protected routes
-  if (!session) {
+  if (!user) {
     const redirectUrl = new URL('/auth/login', request.url);
     redirectUrl.searchParams.set('redirectedFrom', request.nextUrl.pathname);
     return NextResponse.redirect(redirectUrl);
@@ -39,4 +39,3 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: ['/', '/auth/:path*', '/home/:path*', '/orders/:path*', '/cart/:path*', '/profile/:path*'],
 };
-
