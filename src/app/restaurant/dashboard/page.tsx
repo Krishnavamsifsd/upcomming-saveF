@@ -1,7 +1,7 @@
 "use client"
 import { useState } from 'react';
 import RestaurantLayout from '../../components/layout/RestaurantLayout';
-import StatsCard from '../../components/dashboard/StatsCard';
+import { StatsCard } from '@/app/restaurant/components/StatsCard';
 import { 
   TrendingUp, 
   ShoppingBag,

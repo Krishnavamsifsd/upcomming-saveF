@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import BottomNav from './BottomNav';
-import TopNav from './TopNav';
-import Sidebar from './Sidebar';
-
+import TopNav from '@/src/app/components/ui/TopNav';
+import Sidebar from '@/src/app/components/ui/Sidebar';
 export default function RestaurantLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 

@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import RestaurantLayout from '@/components/layout/RestaurantLayout';
 import { Filter } from 'lucide-react';
+import { OrderCard } from '../components/OrderCard';
 
 const orderStatuses = ['All', 'New', 'Preparing', 'Ready', 'Completed', 'Cancelled'];
 
@@ -39,7 +40,19 @@ export default function Orders() {
 
         {/* Orders List */}
         <div className="mt-4 space-y-4">
-          <OrderCard />
+          <OrderCard 
+            order={{
+              id: "1",
+              status: "pending",
+              items: [],
+              customerName: "John Doe",
+              total: 0,
+              createdAt: new Date().toISOString(),
+              isFlashSale: false
+            }}
+            onStatusChange={(orderId, status) => console.log(orderId, status)}
+            onViewDetails={(order) => console.log(order)}
+          />
           {/* Add more OrderCards */}
         </div>
       </div>
