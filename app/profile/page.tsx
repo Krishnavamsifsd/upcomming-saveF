@@ -1,6 +1,31 @@
-import { Award, Heart, Settings, Star, Trophy } from 'lucide-react';
+"use client"
+
+import { Award, Heart, Settings, Star, Trophy, LogOut } from 'lucide-react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function ProfilePage() {
+  const router = useRouter();
+  const supabase = createClientComponentClient();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      router.push('/auth/login');
+      router.refresh();
+    } catch (error) {
+      console.error('Error logging out:', error);
+      alert('Failed to logout. Please try again.');
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
   return (
     <div className="space-y-4">
       {/* Profile Header */}
@@ -14,8 +39,8 @@ export default function ProfilePage() {
             />
           </div>
           <div>
-            <h2 className="text-xl font-semibold">Rahul Kumar</h2>
-            <p className="text-gray-600">rahul@example.com</p>
+            <h2 className="text-xl font-semibold">Krishna vamsi</h2>
+            <p className="text-gray-600">krishnavamsifsd@gmail.com</p>
             <div className="mt-1 flex items-center text-sm text-gray-500">
               <Star className="w-4 h-4 mr-1 text-yellow-400" />
               <span>4.8 • 12 orders</span>
@@ -102,6 +127,20 @@ export default function ProfilePage() {
               <span>Notifications</span>
             </div>
             <span className="text-gray-400">→</span>
+          </button>
+          <button 
+            onClick={() => {
+              if(window.confirm('Are you sure you want to logout?')) {
+                handleLogout();
+              }
+            }}
+            disabled={isLoggingOut}
+            className="w-full px-4 py-3 flex items-center justify-between hover:bg-red-50 text-red-600"
+          >
+            <div className="flex items-center space-x-3">
+              <LogOut className="w-5 h-5" />
+              <span>{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
+            </div>
           </button>
         </div>
       </div>

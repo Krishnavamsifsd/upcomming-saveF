@@ -127,7 +127,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6 space-y-12">
+    <div className="max-w-7xl mx-auto  pb-4 space-y-12">
       {/* Hero Banner - Enhanced */}
       <div className="relative h-[400px] rounded-3xl overflow-hidden group">
         <img 
