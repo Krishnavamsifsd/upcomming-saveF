@@ -1,6 +1,11 @@
+"use client"
+
 import { Clock, CheckCircle2, XCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function OrdersPage() {
+  const router = useRouter();
+
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold">My Orders</h2>
@@ -8,7 +13,10 @@ export default function OrdersPage() {
       {/* Active Orders */}
       <div className="space-y-4">
         <h3 className="text-lg font-medium text-gray-700">Active Orders</h3>
-        <div className="bg-white rounded-lg shadow-sm p-4">
+        <div 
+          className="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow"
+          onClick={() => router.push('/orders/12345')}
+        >
           <div className="flex items-start space-x-4">
             <div className="w-16 h-16 rounded-lg overflow-hidden">
               <img
@@ -28,7 +36,13 @@ export default function OrdersPage() {
                 Order #12345 • ₹20
               </div>
             </div>
-            <button className="text-primary text-sm font-medium">
+            <button 
+              onClick={(e) => {
+                e.stopPropagation(); // Prevents the parent div's onClick from firing
+                router.push('/orders/12345');
+              }}
+              className="text-primary text-sm font-medium hover:text-primary/80"
+            >
               View Details
             </button>
           </div>
@@ -40,7 +54,10 @@ export default function OrdersPage() {
         <h3 className="text-lg font-medium text-gray-700">Past Orders</h3>
         <div className="space-y-4">
           {/* Completed Order */}
-          <div className="bg-white rounded-lg shadow-sm p-4">
+          <div 
+            className="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow"
+            onClick={() => router.push('/orders/12346')}
+          >
             <div className="flex items-start space-x-4">
               <div className="w-16 h-16 rounded-lg overflow-hidden">
                 <img
@@ -63,7 +80,10 @@ export default function OrdersPage() {
           </div>
 
           {/* Cancelled Order */}
-          <div className="bg-white rounded-lg shadow-sm p-4">
+          <div 
+            className="bg-white rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-md transition-shadow"
+            onClick={() => router.push('/orders/12347')}
+          >
             <div className="flex items-start space-x-4">
               <div className="w-16 h-16 rounded-lg overflow-hidden">
                 <img
