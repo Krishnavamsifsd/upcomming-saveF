@@ -5,12 +5,36 @@ import { Clock, CheckCircle2, XCircle, MapPin, Phone, ArrowLeft, AlertCircle, Co
 import { useRouter } from 'next/navigation';
 import { use } from 'react';
 
+// Define types
+interface OrderItem {
+  name: string;
+  quantity: number;
+  price: number;
+  originalPrice: number;
+}
+
+interface Order {
+  id: string;
+  items: string;
+  restaurant: string;
+  image: string;
+  status: string;
+  pickupTime: string;
+  price: number;
+  originalPrice: number;
+  date: string;
+  address: string;
+  contact: string;
+  restaurantNotes?: string;
+  itemDetails: OrderItem[];
+  verificationCode: string;
+}
+
 export default function OrderDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const resolvedParams = use(params);
   const [copySuccess, setCopySuccess] = useState(false);
-  const [order, setOrder] = useState<null | any>(null);
-
+  const [order, setOrder] = useState<Order | null>(null);
   // Generate verification code after component mounts
   useEffect(() => {
     // Create a deterministic verification code based on order ID
