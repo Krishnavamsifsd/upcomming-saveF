@@ -24,14 +24,20 @@ export default async function RootLayout({
                              pathname.startsWith('/orders') || 
                              pathname.startsWith('/cart') || 
                              pathname.startsWith('/profile');
+  const isAuthPage = pathname.startsWith('/auth/login') || pathname.startsWith('/auth/signup');
+const isHomePage = pathname === '/';
 
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className="min-h-screen bg-gray-50">
-          <main className={`container mx-auto px-4 py-4 ${isAuthenticatedRoute ? 'pb-16' : ''}`}>
-            {children}
-          </main>
+
+const paddingClass = isAuthPage || isHomePage ? '' : 'px-4 py-4';
+const bottomPaddingClass = isAuthenticatedRoute ? 'pb-16' : '';
+
+return (
+  <html lang="en">
+    <body className={inter.className}>
+      <div className="min-h-screen bg-gray-50">
+        <main className={`container mx-auto ${paddingClass} ${bottomPaddingClass}`}>
+          {children}
+        </main>
           {isAuthenticatedRoute && <BottomNav />}
         </div>
       </body>

@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { Search, SlidersHorizontal, MapPin, Bell, User, Star, TrendingUp, Clock, Gift, Share2, Map, Filter, ChevronRight, Utensils, Coffee, Pizza, Heart } from 'lucide-react';
+import Link from 'next/link';
 
 // Add meal data
 const meals = [
@@ -282,9 +283,9 @@ export default function HomePage() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold">Popular Restaurants</h2>
-          <button className="text-primary flex items-center hover:underline">
+          <Link href="/restaurants" className="text-primary flex items-center hover:underline">
             View all <ChevronRight className="w-4 h-4 ml-1" />
-          </button>
+          </Link>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {restaurants.map((restaurant) => (
